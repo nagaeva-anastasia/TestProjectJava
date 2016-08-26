@@ -1,10 +1,14 @@
 *.class
+.metadata/
+.recommenders/
+test-output/
+bin/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
-*.jar
+# *.jar #
 *.war
 *.ear
 
