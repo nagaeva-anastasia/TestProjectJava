@@ -14,7 +14,13 @@ import com.google.common.base.Predicate;
 
 import services.helpers.OpenPageEnum;
 
-public class BasePage extends Page {
+/**
+ * Class describes base structure of Mail.ru pages
+ * 
+ * @author Vyacheslav Milashov
+ */
+
+public class BasePage extends AbstractPage {
 	private final String SENT_FOLDER_LINK = "a[href='/messages/sent/']";
 	private final String DRAFTS_FOLDER_LINK = "a[href='/messages/drafts/']";
 	private final String INBOX_FOLDER_LINK = "a[href='/messages/inbox/']";
@@ -24,11 +30,17 @@ public class BasePage extends Page {
 
 	protected BasePage(WebDriver driver) {
 
-		Page.driver = driver;
-		Page.awaiter = new WebDriverWait(Page.driver, 2);
-		Page.driver.manage().timeouts().implicitlyWait(TIME_TO_WAIT, TimeUnit.MILLISECONDS);
+		AbstractPage.driver = driver;
+		AbstractPage.awaiter = new WebDriverWait(AbstractPage.driver, 2);
+		AbstractPage.driver.manage().timeouts().implicitlyWait(TIME_TO_WAIT, TimeUnit.MILLISECONDS);
 		PageFactory.initElements(getDriver(), this);
 	}
+
+	/**
+	 * Method checks element presence
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public boolean isElementPresent(By locator) {
 		try {
@@ -41,6 +53,12 @@ public class BasePage extends Page {
 		}
 	}
 
+	/**
+	 * Method checks element presence
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public boolean isElementPresent(WebElement element) {
 		try {
 			waitFor().until((Predicate<WebDriver>) d -> element.isDisplayed());
@@ -51,6 +69,12 @@ public class BasePage extends Page {
 		}
 	}
 
+	/**
+	 * Method checks element presence
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public void switchTo(WebElement frame) {
 		if (frame == null) {
 			getDriver().switchTo().defaultContent();
@@ -58,6 +82,12 @@ public class BasePage extends Page {
 			getDriver().switchTo().frame(frame);
 		}
 	}
+
+	/**
+	 * Method edits element's content
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public void editElement(WebElement element, String text) {
 		if (element.getTagName() == "body") {
@@ -68,6 +98,12 @@ public class BasePage extends Page {
 		element.clear();
 		element.sendKeys(text);
 	}
+
+	/**
+	 * Method opens pages
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public MailListPage open(OpenPageEnum page) {
 		switch (page) {
@@ -89,11 +125,23 @@ public class BasePage extends Page {
 		return new MailListPage(getDriver());
 	}
 
+	/**
+	 * Method logs out
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public AuthPage logout() throws InterruptedException {
 		Thread.sleep(1000);
 		executeScript(GOTO_SCRIPT, LOGOUT_ID);
 		return new AuthPage(getDriver());
 	}
+
+	/**
+	 * Method executes scripts
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public void executeScript(String script, String selector) {
 		JavascriptExecutor js = (JavascriptExecutor) getDriver();

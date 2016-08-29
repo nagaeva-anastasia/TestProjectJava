@@ -12,6 +12,12 @@ import java.util.stream.Stream;
 import services.helpers.LetterEnum;
 import services.helpers.LoginEnum;
 
+/**
+ * Class provides data from TestData.txt file
+ * 
+ * @author Vyacheslav Milashov
+ */
+
 public class TestDataProvider {
 	private String[] _texts;
 
@@ -27,18 +33,30 @@ public class TestDataProvider {
 		_texts = str.split("----");
 	}
 
+	/**
+	 * Method returns authorization data
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public Map<LoginEnum, String> getAuthData() {
 		String text = Stream.of(_texts).filter(t -> t.contains("AuthData")).findFirst().get();
 		String[] fields = text.split("\\r?\\n");
 
 		return new HashMap<LoginEnum, String>() {
 			{
-				put(LoginEnum.Login, getValue(fields, "Login:"));
-				put(LoginEnum.Password, getValue(fields, "Password:"));
-				put(LoginEnum.Domain, getValue(fields, "Domain:"));
+				put(LoginEnum.Login, getFieldValue(fields, "Login:"));
+				put(LoginEnum.Password, getFieldValue(fields, "Password:"));
+				put(LoginEnum.Domain, getFieldValue(fields, "Domain:"));
 			}
 		};
 	}
+
+	/**
+	 * Method returns drafts data
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public List<Map<LetterEnum, String>> getDraftsData() {
 		String[] lettersTexts = Stream.of(_texts).filter(t -> t.contains("Letter") && !t.contains("ToSend"))
@@ -52,25 +70,43 @@ public class TestDataProvider {
 		return drafts;
 	}
 
+	/**
+	 * Method returns letter for sending
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public Map<LetterEnum, String> getLetterToSendData() {
 		String letterToSend = Stream.of(_texts).filter(t -> t.contains("Letter") && t.contains("ToSend")).findFirst()
 		        .get();
 		return getLetter(letterToSend);
 	}
 
+	/**
+	 * Method returns single letter from provider
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	private Map<LetterEnum, String> getLetter(String text) {
 		String[] fields = text.split("\\r?\\n");
 
 		return new HashMap<LetterEnum, String>() {
 			{
-				put(LetterEnum.Email, getValue(fields, "Email:"));
-				put(LetterEnum.Subject, getValue(fields, "Subject:"));
-				put(LetterEnum.Body, getValue(fields, "Body:"));
+				put(LetterEnum.Email, getFieldValue(fields, "Email:"));
+				put(LetterEnum.Subject, getFieldValue(fields, "Subject:"));
+				put(LetterEnum.Body, getFieldValue(fields, "Body:"));
 			}
 		};
 	}
 
-	private String getValue(String[] testDataStrings, String splitter) {
+	/**
+	 * Method returns field value from provider
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
+	private String getFieldValue(String[] testDataStrings, String splitter) {
 		return Stream.of(testDataStrings).filter(s -> s.contains(splitter)).findAny().get().split(splitter)[1].trim();
 	}
 }

@@ -9,11 +9,24 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import configurations.Configuration;
+import configurations.AppConfiguration;
+
+/**
+ * Class creates remote driver
+ * 
+ * @author Vyacheslav Milashov
+ */
 
 public class RemoteDriverFactory extends WebDriverFactory {
+
+	/**
+	 * Method creates remote driver object
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	@Override
-	public WebDriver createDriver(Configuration configuration) throws MalformedURLException {
+	public WebDriver createDriver(AppConfiguration configuration) throws MalformedURLException {
 		if (driver != null) {
 			return driver;
 		}
@@ -40,10 +53,22 @@ public class RemoteDriverFactory extends WebDriverFactory {
 		return driver;
 	}
 
+	/**
+	 * Method sets driver capabilities
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	private void setCapabilities(Platform platform, String browserVersion) {
 		capabilities.setCapability(CapabilityType.PLATFORM, platform);
 		capabilities.setCapability(CapabilityType.VERSION, browserVersion);
 	}
+
+	/**
+	 * Method returns Selenium Hub URI
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	private static String buildRemoteServer(String remoteServer, int remoteServerPort) {
 		String s = String.format("%1s:%2s/wd/hub", remoteServer, remoteServerPort);

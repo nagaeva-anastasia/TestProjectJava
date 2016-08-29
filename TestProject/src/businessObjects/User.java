@@ -6,6 +6,12 @@ import java.util.Map;
 import services.dataProvider.TestDataProvider;
 import services.helpers.LoginEnum;
 
+/**
+ * Class describes user business object
+ * 
+ * @author Vyacheslav Milashov
+ */
+
 public class User {
 	public String Login;
 

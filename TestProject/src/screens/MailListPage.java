@@ -18,6 +18,12 @@ import com.google.common.base.Predicate;
 import configurations.setUp.TestConfigurationReader;
 import services.helpers.OpenPageEnum;
 
+/**
+ * Class works with MailListPage
+ * 
+ * @author Vyacheslav Milashov
+ */
+
 public class MailListPage extends BasePage {
 	@FindBy(css = "a[data-bem='b-toolbar__btn']")
 	private WebElement writeButton;
@@ -54,20 +60,45 @@ public class MailListPage extends BasePage {
 		PageFactory.initElements(getDriver(), this);
 	}
 
+	/**
+	 * Method opens Compose page
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public ComposePage openComposePage() throws InterruptedException {
 		executeScript(CLICK_SCRIPT_NO_JQUERY, WRITE_NEW);
 		waitFor().until((Predicate<WebDriver>) d -> d.getTitle().contains("Новое письмо"));
 		return new ComposePage(getDriver());
 	}
 
+	/**
+	 * Method opens Sent page after alert
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public MailListPage openSentAfterAlert() {
 		isElementPresent(sentAlert);
 		return open(OpenPageEnum.Sent);
 	}
 
+	/**
+	 * Method verifies authorization success
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public boolean isAuthSucceed() {
 		return writeButton.getText().contains("Написать");
 	}
+
+	/**
+	 * Method checks email data from provider with email element text on web
+	 * page
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public boolean isEmailAddressInProviderData(String providerData) {
 		waitFor().until((Predicate<WebDriver>) d -> !d.getTitle().contains("Входящие"));
@@ -83,15 +114,34 @@ public class MailListPage extends BasePage {
 		return text.equals(providerData);
 	}
 
+	/**
+	 * Method checks email subject data from provider with subject element text
+	 * on web page
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public boolean isEmailSubjectInProviderData(String providerData) {
 		String text = getLastMailText(SUBJECTS_SELECTOR);
 		return text.equals(providerData);
 	}
 
+	/**
+	 * Method checks body data from provider with body element text on web page
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public boolean isBodyInProviderData() throws IOException {
 		ComposePage composePage = openLastDraft();
 		return composePage.isTextPresentInBody();
 	}
+
+	/**
+	 * Method checks email data from provider with email field text on web page
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public ComposePage openLastDraft() {
 		waitFor().until((Predicate<WebDriver>) d -> d.getTitle().contains("Черновики"));
@@ -99,6 +149,12 @@ public class MailListPage extends BasePage {
 		waitFor().until((Predicate<WebDriver>) d -> d.getTitle().contains("Новое письмо"));
 		return new ComposePage(getDriver());
 	}
+
+	/**
+	 * Method clears mail list
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public void clearMailList() throws InterruptedException {
 		if (isElementPresent(emptyMessage)) {
@@ -136,6 +192,12 @@ public class MailListPage extends BasePage {
 		WebElement del = deleteElements.stream().filter(el -> el.isDisplayed()).findAny().get();
 		builder.sendKeys(del, Keys.DELETE).perform();
 	}
+
+	/**
+	 * Method gets last mail text according to selector
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	private String getLastMailText(String selector) {
 		JavascriptExecutor js = (JavascriptExecutor) getDriver();

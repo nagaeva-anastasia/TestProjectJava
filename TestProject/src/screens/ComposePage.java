@@ -19,6 +19,12 @@ import configurations.setUp.TestConfigurationReader;
 import services.dataProvider.TestDataProvider;
 import services.helpers.LetterEnum;
 
+/**
+ * Class works with Compose page
+ * 
+ * @author Vyacheslav Milashov
+ */
+
 public class ComposePage extends BasePage {
 	@FindBy(css = "textarea.js-input.compose__labels__input")
 	private WebElement emailField;
@@ -49,10 +55,22 @@ public class ComposePage extends BasePage {
 		PageFactory.initElements(getDriver(), this);
 	}
 
+	/**
+	 * Method saves drafts
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public void saveDraft(Map<LetterEnum, String> letterData) {
 		editMailFields(letterData);
 		saveButton.click();
 	}
+
+	/**
+	 * Method sends mail
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public MailListPage sendMail(Map<LetterEnum, String> letterData) {
 		editMailFields(letterData);
@@ -70,10 +88,22 @@ public class ComposePage extends BasePage {
 		return new MailListPage(getDriver());
 	}
 
+	/**
+	 * Method checks if draft saved
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public boolean isDraftSaved() {
 		waitFor().until((Predicate<WebDriver>) d -> checkElement.getText().contains("Сохранено"));
 		return true;
 	}
+
+	/**
+	 * Method checks text presence in body element
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public boolean isTextPresentInBody() throws IOException {
 		TestDataProvider provider = new TestDataProvider();
@@ -87,6 +117,12 @@ public class ComposePage extends BasePage {
 		return true;
 	}
 
+	/**
+	 * Method edits mail fields
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	private void editMailFields(Map<LetterEnum, String> letterData) {
 		Letter letter = new Letter(letterData);
 
@@ -96,6 +132,12 @@ public class ComposePage extends BasePage {
 			bodyElementEdit(letter.Body);
 		}
 	}
+
+	/**
+	 * Method edits body element
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	private void bodyElementEdit(String text) {
 		switchTo(frameElement);

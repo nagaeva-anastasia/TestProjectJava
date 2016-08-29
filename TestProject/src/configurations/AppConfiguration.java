@@ -2,7 +2,13 @@ package configurations;
 
 import org.openqa.selenium.Platform;
 
-public class Configuration {
+/**
+ * Class stores application configuration
+ * 
+ * @author Vyacheslav Milashov
+ */
+
+public class AppConfiguration {
 	public String Browser;
 
 	public Platform PlatformType;

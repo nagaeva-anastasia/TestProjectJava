@@ -7,6 +7,12 @@ import java.util.Properties;
 
 import org.openqa.selenium.Platform;
 
+/**
+ * Class reads application configuration from config.properties
+ * 
+ * @author Vyacheslav Milashov
+ */
+
 public class TestConfigurationReader {
 	public static boolean Remote;
 	public static String Browser;
@@ -16,6 +22,12 @@ public class TestConfigurationReader {
 	public static int SeleniumHubPort;
 	public static String ApplicationUrl;
 	private static Properties prop;
+
+	/**
+	 * Method reads application configuration
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public TestConfigurationReader() throws IOException {
 		prop = new Properties();
@@ -42,6 +54,12 @@ public class TestConfigurationReader {
 
 		ApplicationUrl = prop.getProperty("ApplicationUrl");
 	}
+
+	/**
+	 * Method gets platform type
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	private static Platform getPlatformType() {
 		String platformValue = prop.getProperty("Platform");

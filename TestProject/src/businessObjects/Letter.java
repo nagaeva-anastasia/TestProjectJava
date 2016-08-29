@@ -1,7 +1,14 @@
 package businessObjects;
 
 import java.util.Map;
+
 import services.helpers.LetterEnum;
+
+/**
+ * Class describes letter business object
+ * 
+ * @author Vyacheslav Milashov
+ */
 
 public class Letter {
 	public String EmailAddress;

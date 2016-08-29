@@ -26,7 +26,7 @@ public class TestNGMailClientTest {
 
 	@BeforeTest
 	public static void start() throws Exception {
-		_driver = TestDriverFactory.CreateDriver();
+		_driver = TestDriverFactory.ñreateDriver();
 		_driver.navigate().to("http://mail.ru");
 
 		AuthPage authPage = new AuthPage(_driver);
@@ -41,7 +41,7 @@ public class TestNGMailClientTest {
 
 	@BeforeMethod
 	public void startBrowser() throws Exception {
-		_driver = TestDriverFactory.CreateDriver();
+		_driver = TestDriverFactory.ñreateDriver();
 		_driver.navigate().to("http://mail.ru");
 	}
 

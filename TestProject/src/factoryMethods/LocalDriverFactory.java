@@ -7,11 +7,24 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-import configurations.Configuration;
+import configurations.AppConfiguration;
+
+/**
+ * Class creates local driver
+ * 
+ * @author Vyacheslav Milashov
+ */
 
 public class LocalDriverFactory extends WebDriverFactory {
+
+	/**
+	 * Method creates local driver object
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	@Override
-	public WebDriver createDriver(Configuration configuration) {
+	public WebDriver createDriver(AppConfiguration configuration) {
 		if (driver != null) {
 			return driver;
 		}

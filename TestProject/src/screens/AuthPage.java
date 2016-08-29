@@ -10,6 +10,12 @@ import org.openqa.selenium.support.ui.Select;
 
 import businessObjects.User;
 
+/**
+ * Class works with Authorization page
+ * 
+ * @author Vyacheslav Milashov
+ */
+
 public class AuthPage extends BasePage {
 
 	@FindBy(xpath = "//form[@id='Auth']")
@@ -29,6 +35,12 @@ public class AuthPage extends BasePage {
 		PageFactory.initElements(getDriver(), this);
 	}
 
+	/**
+	 * Method makes login
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public MailListPage login() throws IOException, InterruptedException {
 		User user = new User();
 
@@ -44,9 +56,21 @@ public class AuthPage extends BasePage {
 		return new MailListPage(getDriver());
 	}
 
+	/**
+	 * Method checks if user already logged in
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
+
 	public boolean isAlreadyLoggedIn() {
 		return !isElementPresent(login);
 	}
+
+	/**
+	 * Method checks if there is login form on the page
+	 * 
+	 * @author Vyacheslav Milashov
+	 */
 
 	public boolean IsLoginFormPresent() {
 		return isElementPresent(login) & isElementPresent(password);
