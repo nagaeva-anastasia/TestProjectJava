@@ -2,6 +2,6 @@ package services.helpers;
 
 public enum LoginEnum {
     Login,
-    Domain,
+	Domain, 
     Password
 }

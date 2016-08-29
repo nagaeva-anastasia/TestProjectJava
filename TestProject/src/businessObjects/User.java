@@ -15,7 +15,7 @@ public class User {
 
 	public User() throws IOException {
 		TestDataProvider provider = new TestDataProvider();
-		Map<LoginEnum, String> data = provider.GetAuthData();
+		Map<LoginEnum, String> data = provider.getAuthData();
 
 		Login = data.get(LoginEnum.Login);
 		Password = data.get(LoginEnum.Password);

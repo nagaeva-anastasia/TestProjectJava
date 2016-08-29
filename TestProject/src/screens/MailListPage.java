@@ -51,74 +51,73 @@ public class MailListPage extends BasePage {
 
 	public MailListPage(WebDriver driver) {
 		super(driver);
-		PageFactory.initElements(GetDriver(), this);
+		PageFactory.initElements(getDriver(), this);
 	}
 
-	public ComposePage OpenComposePage() throws InterruptedException {
-		ExecuteScript(CLICK_SCRIPT_NO_JQUERY, WRITE_NEW);
-		Wait().until((Predicate<WebDriver>) d -> d.getTitle().contains("Новое письмо"));
-		return new ComposePage(GetDriver());
+	public ComposePage openComposePage() throws InterruptedException {
+		executeScript(CLICK_SCRIPT_NO_JQUERY, WRITE_NEW);
+		waitFor().until((Predicate<WebDriver>) d -> d.getTitle().contains("Новое письмо"));
+		return new ComposePage(getDriver());
 	}
 
-	public MailListPage OpenSentAfterAlert() {
-		IsElementPresent(sentAlert);
-		return Open(OpenPageEnum.Sent);
+	public MailListPage openSentAfterAlert() {
+		isElementPresent(sentAlert);
+		return open(OpenPageEnum.Sent);
 	}
 
-	public boolean IsAuthSucceed() {
+	public boolean isAuthSucceed() {
 		return writeButton.getText().contains("Написать");
 	}
 
-	public boolean IsEmailAddressInProviderData(String providerData) {
-		Wait().until((Predicate<WebDriver>) d -> !d.getTitle().contains("Входящие"));
-		Wait().until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(SENT_ALERT_SELECTOR)));
+	public boolean isEmailAddressInProviderData(String providerData) {
+		waitFor().until((Predicate<WebDriver>) d -> !d.getTitle().contains("Входящие"));
+		waitFor().until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(SENT_ALERT_SELECTOR)));
 
-		if (GetDriver().getTitle().contains("Отправленные")) {
-			GetDriver().navigate().refresh();
+		if (getDriver().getTitle().contains("Отправленные")) {
+			getDriver().navigate().refresh();
 		}
 
-		Wait().until((Predicate<WebDriver>) d -> d.findElement(By.cssSelector(MAIL_SELECTOR)).isDisplayed());
+		waitFor().until((Predicate<WebDriver>) d -> d.findElement(By.cssSelector(MAIL_SELECTOR)).isDisplayed());
 
-		String text = GetLastMailText(ADDRESS_SELECTOR);
+		String text = getLastMailText(ADDRESS_SELECTOR);
 		return text.equals(providerData);
 	}
 
-	public boolean IsEmailSubjectInProviderData(String providerData) {
-		String text = GetLastMailText(SUBJECTS_SELECTOR);
+	public boolean isEmailSubjectInProviderData(String providerData) {
+		String text = getLastMailText(SUBJECTS_SELECTOR);
 		return text.equals(providerData);
 	}
 
-	public boolean IsBodyInProviderData() throws IOException {
-		ComposePage composePage = OpenLastDraft();
-		return composePage.IsTextPresentInBody();
+	public boolean isBodyInProviderData() throws IOException {
+		ComposePage composePage = openLastDraft();
+		return composePage.isTextPresentInBody();
 	}
 
-	public ComposePage OpenLastDraft() {
-		Wait().until((Predicate<WebDriver>) d -> d.getTitle().contains("Черновики"));
-		ExecuteScript(CLICK_SCRIPT, MAIL_SELECTOR);
-		Wait().until((Predicate<WebDriver>) d -> d.getTitle().contains("Новое письмо"));
-		return new ComposePage(GetDriver());
+	public ComposePage openLastDraft() {
+		waitFor().until((Predicate<WebDriver>) d -> d.getTitle().contains("Черновики"));
+		executeScript(CLICK_SCRIPT, MAIL_SELECTOR);
+		waitFor().until((Predicate<WebDriver>) d -> d.getTitle().contains("Новое письмо"));
+		return new ComposePage(getDriver());
 	}
 
-	public void ClearMailList() throws InterruptedException {
-		if (IsElementPresent(emptyMessage)) {
+	public void clearMailList() throws InterruptedException {
+		if (isElementPresent(emptyMessage)) {
 			return;
 		}
 
-		Actions builder = new Actions(GetDriver());
+		Actions builder = new Actions(getDriver());
 
-		Wait().until((Predicate<WebDriver>) d -> dropdowns.stream().filter(el -> el.isDisplayed()).count() > 0);
+		waitFor().until((Predicate<WebDriver>) d -> dropdowns.stream().filter(el -> el.isDisplayed()).count() > 0);
 
 		while (TestConfigurationReader.Browser.equals("IE")) {
-			GetDriver().navigate().refresh();
-			//Thread.sleep(500);
+			getDriver().navigate().refresh();
+			// Thread.sleep(500);
 			WebElement dropdown = dropdowns.stream().filter(el -> el.isDisplayed()).findAny().get();
 			builder.sendKeys(dropdown, Keys.ENTER).perform();
-			//ExecuteScript(CLICK_SCRIPT_NO_JQUERY, LETTERS_SELECTOR);
-			if (IsElementPresent(selectOnPage)){
+			// ExecuteScript(CLICK_SCRIPT_NO_JQUERY, LETTERS_SELECTOR);
+			if (isElementPresent(selectOnPage)) {
 				builder.click(selectOnPage).perform();
-			}
-			else{
+			} else {
 				continue;
 			}
 		}
@@ -127,10 +126,10 @@ public class MailListPage extends BasePage {
 			builder.click(dropdown).perform();
 		}
 
-		IsElementPresent(selectOnPage);
+		isElementPresent(selectOnPage);
 		builder.click(selectOnPage).perform();
 
-		if (IsElementPresent(selectFromAllPages)) {
+		if (isElementPresent(selectFromAllPages)) {
 			builder.click(selectFromAllPages).perform();
 		}
 
@@ -138,8 +137,8 @@ public class MailListPage extends BasePage {
 		builder.sendKeys(del, Keys.DELETE).perform();
 	}
 
-	private String GetLastMailText(String selector) {
-		JavascriptExecutor js = (JavascriptExecutor) GetDriver();
+	private String getLastMailText(String selector) {
+		JavascriptExecutor js = (JavascriptExecutor) getDriver();
 		String script = String.format(LAST_MAIL_TEXT_SCRIPT, selector);
 		String text = (String) js.executeScript(script);
 		return text;

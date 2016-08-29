@@ -20,7 +20,7 @@ public class TestDriverFactory {
         {
             factory = new RemoteDriverFactory();
                 
-            return factory.CreateDriver(
+            return factory.createDriver(
                     new RemoteDriverConfiguration(
                             TestConfigurationReader.Browser,
                             TestConfigurationReader.PlatformType,
@@ -31,6 +31,6 @@ public class TestDriverFactory {
 
         factory = new LocalDriverFactory();
 
-        return factory.CreateDriver(new LocalDriverConfiguration(TestConfigurationReader.Browser));
+        return factory.createDriver(new LocalDriverConfiguration(TestConfigurationReader.Browser));
     }
 }

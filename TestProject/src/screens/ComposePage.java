@@ -46,61 +46,61 @@ public class ComposePage extends BasePage {
 
 	public ComposePage(WebDriver driver) {
 		super(driver);
-		PageFactory.initElements(GetDriver(), this);
+		PageFactory.initElements(getDriver(), this);
 	}
 
-	public void SaveDraft(Map<LetterEnum, String> letterData) {
-		EditMailFields(letterData);
+	public void saveDraft(Map<LetterEnum, String> letterData) {
+		editMailFields(letterData);
 		saveButton.click();
 	}
 
-	public MailListPage SendMail(Map<LetterEnum, String> letterData) {
-		EditMailFields(letterData);
+	public MailListPage sendMail(Map<LetterEnum, String> letterData) {
+		editMailFields(letterData);
 
-		Actions builder = new Actions(GetDriver());
+		Actions builder = new Actions(getDriver());
 		WebElement sendButton = sendButtons.stream().filter(s -> s.isDisplayed()).findFirst().get();
 		builder.click(sendButton).perform();
 
 		if (TestConfigurationReader.Browser.equals("IE")) {
-			WebElement el = GetDriver().findElement(By.cssSelector(COMPOSE_EMPTY));
-			Wait().until((Predicate<WebDriver>) d -> el.isDisplayed());
+			WebElement el = getDriver().findElement(By.cssSelector(COMPOSE_EMPTY));
+			waitFor().until((Predicate<WebDriver>) d -> el.isDisplayed());
 			el.findElement(By.cssSelector(SUBMIT_BUTTON)).click();
 		}
 
-		return new MailListPage(GetDriver());
+		return new MailListPage(getDriver());
 	}
 
-	public boolean IsDraftSaved() {
-		Wait().until((Predicate<WebDriver>) d -> checkElement.getText().contains("Сохранено"));
+	public boolean isDraftSaved() {
+		waitFor().until((Predicate<WebDriver>) d -> checkElement.getText().contains("Сохранено"));
 		return true;
 	}
 
-	public boolean IsTextPresentInBody() throws IOException {
+	public boolean isTextPresentInBody() throws IOException {
 		TestDataProvider provider = new TestDataProvider();
 
-		List<Map<LetterEnum, String>> list = provider.GetDraftsData();
+		List<Map<LetterEnum, String>> list = provider.getDraftsData();
 		Map<LetterEnum, String> lastProviderData = list.get(list.size() - 1);
 
-		SwitchTo(frameElement);
-		Wait().until((Predicate<WebDriver>) d -> mailBody.getText().contains(lastProviderData.get(LetterEnum.Body)));
-		GetDriver().switchTo().defaultContent();
+		switchTo(frameElement);
+		waitFor().until((Predicate<WebDriver>) d -> mailBody.getText().contains(lastProviderData.get(LetterEnum.Body)));
+		getDriver().switchTo().defaultContent();
 		return true;
 	}
 
-	private void EditMailFields(Map<LetterEnum, String> letterData) {
+	private void editMailFields(Map<LetterEnum, String> letterData) {
 		Letter letter = new Letter(letterData);
 
-		EditElement(emailField, letter.EmailAddress);
-		EditElement(subjectField, letter.Subject);
+		editElement(emailField, letter.EmailAddress);
+		editElement(subjectField, letter.Subject);
 		if (!TestConfigurationReader.Browser.equals("IE")) {
-			BodyElementEdit(letter.Body);
+			bodyElementEdit(letter.Body);
 		}
 	}
 
-	private void BodyElementEdit(String text) {
-		SwitchTo(frameElement);
-		WebElement mailBody = Wait().until(ExpectedConditions.visibilityOfElementLocated(By.id("tinymce")));
-		EditElement(mailBody, text);
-		GetDriver().switchTo().defaultContent();
+	private void bodyElementEdit(String text) {
+		switchTo(frameElement);
+		WebElement mailBody = waitFor().until(ExpectedConditions.visibilityOfElementLocated(By.id("tinymce")));
+		editElement(mailBody, text);
+		getDriver().switchTo().defaultContent();
 	}
 }

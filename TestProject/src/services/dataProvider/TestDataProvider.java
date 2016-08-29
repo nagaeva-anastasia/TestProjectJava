@@ -27,50 +27,50 @@ public class TestDataProvider {
 		_texts = str.split("----");
 	}
 
-	public Map<LoginEnum, String> GetAuthData() {
+	public Map<LoginEnum, String> getAuthData() {
 		String text = Stream.of(_texts).filter(t -> t.contains("AuthData")).findFirst().get();
 		String[] fields = text.split("\\r?\\n");
 
 		return new HashMap<LoginEnum, String>() {
 			{
-				put(LoginEnum.Login, GetValue(fields, "Login:"));
-				put(LoginEnum.Password, GetValue(fields, "Password:"));
-				put(LoginEnum.Domain, GetValue(fields, "Domain:"));
+				put(LoginEnum.Login, getValue(fields, "Login:"));
+				put(LoginEnum.Password, getValue(fields, "Password:"));
+				put(LoginEnum.Domain, getValue(fields, "Domain:"));
 			}
 		};
 	}
 
-	public List<Map<LetterEnum, String>> GetDraftsData() {
+	public List<Map<LetterEnum, String>> getDraftsData() {
 		String[] lettersTexts = Stream.of(_texts).filter(t -> t.contains("Letter") && !t.contains("ToSend"))
-				.toArray(String[]::new);
+		        .toArray(String[]::new);
 
 		List<Map<LetterEnum, String>> drafts = new ArrayList<Map<LetterEnum, String>>();
 
 		for (String text : lettersTexts) {
-			drafts.add(GetLetter(text));
+			drafts.add(getLetter(text));
 		}
 		return drafts;
 	}
 
-	public Map<LetterEnum, String> GetLetterToSendData() {
+	public Map<LetterEnum, String> getLetterToSendData() {
 		String letterToSend = Stream.of(_texts).filter(t -> t.contains("Letter") && t.contains("ToSend")).findFirst()
-				.get();
-		return GetLetter(letterToSend);
+		        .get();
+		return getLetter(letterToSend);
 	}
 
-	private Map<LetterEnum, String> GetLetter(String text) {
+	private Map<LetterEnum, String> getLetter(String text) {
 		String[] fields = text.split("\\r?\\n");
 
 		return new HashMap<LetterEnum, String>() {
 			{
-				put(LetterEnum.Email, GetValue(fields, "Email:"));
-				put(LetterEnum.Subject, GetValue(fields, "Subject:"));
-				put(LetterEnum.Body, GetValue(fields, "Body:"));
+				put(LetterEnum.Email, getValue(fields, "Email:"));
+				put(LetterEnum.Subject, getValue(fields, "Subject:"));
+				put(LetterEnum.Body, getValue(fields, "Body:"));
 			}
 		};
 	}
 
-	private String GetValue(String[] testDataStrings, String splitter) {
+	private String getValue(String[] testDataStrings, String splitter) {
 		return Stream.of(testDataStrings).filter(s -> s.contains(splitter)).findAny().get().split(splitter)[1].trim();
 	}
 }

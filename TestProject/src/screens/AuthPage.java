@@ -26,29 +26,29 @@ public class AuthPage extends BasePage {
 
 	public AuthPage(WebDriver driver) {
 		super(driver);
-		PageFactory.initElements(GetDriver(), this);
+		PageFactory.initElements(getDriver(), this);
 	}
 
-	public MailListPage Login() throws IOException, InterruptedException {
+	public MailListPage login() throws IOException, InterruptedException {
 		User user = new User();
 
 		Thread.sleep(1500);
 		// Wait().until((Predicate<WebDriver>) d -> domain.isEnabled());
 
 		new Select(domain).selectByValue(user.Domain);
-		EditElement(login, user.Login);
-		EditElement(password, user.Password);
+		editElement(login, user.Login);
+		editElement(password, user.Password);
 
 		form.submit();
 
-		return new MailListPage(GetDriver());
+		return new MailListPage(getDriver());
 	}
 
-	public boolean IsAlreadyLoggedIn() {
-		return !IsElementPresent(login);
+	public boolean isAlreadyLoggedIn() {
+		return !isElementPresent(login);
 	}
 
 	public boolean IsLoginFormPresent() {
-		return IsElementPresent(login) & IsElementPresent(password);
+		return isElementPresent(login) & isElementPresent(password);
 	}
 }

@@ -35,7 +35,7 @@ public class TestConfigurationReader {
 
 		if (Remote) {
 			BrowserVersion = prop.getProperty("BrowserVersion");
-			PlatformType = GetPlatformType();
+			PlatformType = getPlatformType();
 			SeleniumHubUrl = prop.getProperty("SeleniumHubUrl");
 			SeleniumHubPort = Integer.parseInt(prop.getProperty("SeleniumHubPort"));
 		}
@@ -43,7 +43,7 @@ public class TestConfigurationReader {
 		ApplicationUrl = prop.getProperty("ApplicationUrl");
 	}
 
-	private static Platform GetPlatformType() {
+	private static Platform getPlatformType() {
 		String platformValue = prop.getProperty("Platform");
 		return Platform.valueOf(platformValue);
 	}

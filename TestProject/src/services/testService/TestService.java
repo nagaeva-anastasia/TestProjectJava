@@ -15,10 +15,10 @@ public class TestService {
 	private static WebDriver _driver;
 	private static int _failsCounter;
 
-	public static void TryToLogout(AuthPage page) throws Exception {
-		_driver = page.GetDriver();
+	public static void tryToLogout(AuthPage page) throws Exception {
+		_driver = page.getDriver();
 		try {
-			page.Logout();
+			page.logout();
 			Assert.assertTrue(page.IsLoginFormPresent());
 			_failsCounter = 0;
 		}
@@ -35,15 +35,15 @@ public class TestService {
 			_driver = TestDriverFactory.CreateDriver();
 			_driver.navigate().to(TestConfigurationReader.ApplicationUrl);
 
-			TryToLogout(page);
+			tryToLogout(page);
 		}
 	}
 
-	public static void ClearMailbox(AuthPage page) throws IOException, InterruptedException {
-		MailListPage mail = page.Login();
-		mail.ClearMailList();
-		page.Open(OpenPageEnum.Sent).ClearMailList();
-		page.Open(OpenPageEnum.Drafts).ClearMailList();
-		page.Logout();
+	public static void clearMailbox(AuthPage page) throws IOException, InterruptedException {
+		MailListPage mail = page.login();
+		mail.clearMailList();
+		page.open(OpenPageEnum.Sent).clearMailList();
+		page.open(OpenPageEnum.Drafts).clearMailList();
+		page.logout();
 	}
 }

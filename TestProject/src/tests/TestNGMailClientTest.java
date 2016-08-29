@@ -25,102 +25,102 @@ public class TestNGMailClientTest {
 	private static WebDriver _driver;
 
 	@BeforeTest
-	public static void Start() throws Exception {
+	public static void start() throws Exception {
 		_driver = TestDriverFactory.CreateDriver();
 		_driver.navigate().to("http://mail.ru");
 
 		AuthPage authPage = new AuthPage(_driver);
 
-		if (authPage.IsAlreadyLoggedIn()) {
-			TestService.TryToLogout(authPage);
+		if (authPage.isAlreadyLoggedIn()) {
+			TestService.tryToLogout(authPage);
 		}
 
-		TestService.ClearMailbox(authPage);
+		TestService.clearMailbox(authPage);
 		_driver.quit();
 	}
 
 	@BeforeMethod
-	public void StartBrowser() throws Exception {
+	public void startBrowser() throws Exception {
 		_driver = TestDriverFactory.CreateDriver();
 		_driver.navigate().to("http://mail.ru");
 	}
 
 	@AfterMethod
-	public void CloseBrowser() throws Exception {
+	public void closeBrowser() throws Exception {
 		AuthPage authPage = new AuthPage(_driver);
 
-		if (authPage.IsAlreadyLoggedIn()) {
-			TestService.TryToLogout(authPage);
+		if (authPage.isAlreadyLoggedIn()) {
+			TestService.tryToLogout(authPage);
 		}
 
-		TestService.ClearMailbox(authPage);
+		TestService.clearMailbox(authPage);
 		_driver.quit();
 	}
 
 	@Test(priority = 1)
-	public void TestNGAuthorizationTest() throws IOException, InterruptedException {
+	public void testNGAuthorizationTest() throws IOException, InterruptedException {
 		AuthPage authPage = new AuthPage(_driver);
-		MailListPage inboxPage = authPage.Login();
-		Assert.assertTrue(inboxPage.IsAuthSucceed());
+		MailListPage inboxPage = authPage.login();
+		Assert.assertTrue(inboxPage.isAuthSucceed());
 	}
 
 	@Test(priority = 2)
-	public void TestNGDraftsSavingTest() throws IOException, InterruptedException {
+	public void testNGDraftsSavingTest() throws IOException, InterruptedException {
 		AuthPage authPage = new AuthPage(_driver);
 		TestDataProvider provider = new TestDataProvider();
-		MailListPage inboxPage = authPage.Login();
-		ComposePage writeNew = inboxPage.OpenComposePage();
+		MailListPage inboxPage = authPage.login();
+		ComposePage writeNew = inboxPage.openComposePage();
 
-		for (Map<LetterEnum, String> draft : provider.GetDraftsData()) {
-			writeNew.SaveDraft(draft);
-			Assert.assertTrue(writeNew.IsDraftSaved());
-			writeNew.GetDriver().navigate().refresh();
+		for (Map<LetterEnum, String> draft : provider.getDraftsData()) {
+			writeNew.saveDraft(draft);
+			Assert.assertTrue(writeNew.isDraftSaved());
+			writeNew.getDriver().navigate().refresh();
 		}
 	}
 
 	@Test(priority = 3)
-	public void TestNGDraftsDataTest() throws IOException, InterruptedException {
+	public void testNGDraftsDataTest() throws IOException, InterruptedException {
 		AuthPage authPage = new AuthPage(_driver);
 		TestDataProvider provider = new TestDataProvider();
-		MailListPage inboxPage = authPage.Login();
-		ComposePage writeNew = inboxPage.OpenComposePage();
-		List<Map<LetterEnum, String>> lettersData = provider.GetDraftsData();
+		MailListPage inboxPage = authPage.login();
+		ComposePage writeNew = inboxPage.openComposePage();
+		List<Map<LetterEnum, String>> lettersData = provider.getDraftsData();
 
 		for (Map<LetterEnum, String> draft : lettersData) {
-			writeNew.SaveDraft(draft);
-			Assert.assertTrue(writeNew.IsDraftSaved());
-			writeNew.GetDriver().navigate().refresh();
+			writeNew.saveDraft(draft);
+			Assert.assertTrue(writeNew.isDraftSaved());
+			writeNew.getDriver().navigate().refresh();
 		}
 
-		MailListPage draftsPage = writeNew.Open(OpenPageEnum.Drafts);
+		MailListPage draftsPage = writeNew.open(OpenPageEnum.Drafts);
 		Map<LetterEnum, String> providerData = lettersData.get(lettersData.size() - 1);
 
-		Assert.assertTrue(draftsPage.IsEmailAddressInProviderData(providerData.get(LetterEnum.Email)));
-		Assert.assertTrue(draftsPage.IsEmailSubjectInProviderData(providerData.get(LetterEnum.Subject)));
+		Assert.assertTrue(draftsPage.isEmailAddressInProviderData(providerData.get(LetterEnum.Email)));
+		Assert.assertTrue(draftsPage.isEmailSubjectInProviderData(providerData.get(LetterEnum.Subject)));
 
 		if (!TestConfigurationReader.Browser.equals("IE")) {
-			Assert.assertTrue(draftsPage.IsBodyInProviderData());
+			Assert.assertTrue(draftsPage.isBodyInProviderData());
 		}
 	}
 
 	@Test(priority = 4)
-	public void TestNGSendTest() throws IOException, InterruptedException {
+	public void testNGSendTest() throws IOException, InterruptedException {
 		AuthPage authPage = new AuthPage(_driver);
 		TestDataProvider provider = new TestDataProvider();
-		MailListPage inboxPage = authPage.Login();
-		ComposePage writeNewPage = inboxPage.OpenComposePage();
-		Map<LetterEnum, String> providerData = provider.GetLetterToSendData();
-		MailListPage mailSentAlertPage = writeNewPage.SendMail(providerData);
-		MailListPage sentPage = mailSentAlertPage.OpenSentAfterAlert();
+		MailListPage inboxPage = authPage.login();
+		ComposePage writeNewPage = inboxPage.openComposePage();
+		Map<LetterEnum, String> providerData = provider.getLetterToSendData();
+		MailListPage mailSentAlertPage = writeNewPage.sendMail(providerData);
+		MailListPage sentPage = mailSentAlertPage.openSentAfterAlert();
 
-		Assert.assertTrue(sentPage.IsEmailAddressInProviderData(providerData.get(LetterEnum.Email)));
-		Assert.assertTrue(sentPage.IsEmailSubjectInProviderData(providerData.get(LetterEnum.Subject)));
+		Assert.assertTrue(sentPage.isEmailAddressInProviderData(providerData.get(LetterEnum.Email)));
+		Assert.assertTrue(sentPage.isEmailSubjectInProviderData(providerData.get(LetterEnum.Subject)));
 	}
 
 	@Test(priority = 5)
-	public void TestNGExitTest() throws IOException, InterruptedException {
-		MailListPage inboxPage = new AuthPage(_driver).Login();
-		AuthPage authPage = inboxPage.Logout();
+	public void testNGExitTest() throws IOException, InterruptedException {
+		MailListPage inboxPage = new AuthPage(_driver).login();
+		AuthPage authPage = inboxPage.logout();
 
 		Assert.assertTrue(authPage.IsLoginFormPresent());
 	}

@@ -9,5 +9,5 @@ public abstract class WebDriverFactory {
 	protected WebDriver driver;
 	protected DesiredCapabilities capabilities;
 
-	public abstract WebDriver CreateDriver(Configuration configuration) throws Exception;
+	public abstract WebDriver createDriver(Configuration configuration) throws Exception;
 }
