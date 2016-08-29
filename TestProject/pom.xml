@@ -3,23 +3,6 @@
   <groupId>TestProject</groupId>
   <artifactId>TestProject</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <dependencies>
-	<dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-        <version>3.0.0-beta2</version>
-    </dependency>
-    <dependency>
-	    <groupId>junit</groupId>
-	    <artifactId>junit</artifactId>
-	    <version>4.10</version>
-	</dependency>
-    <dependency>
-    	<groupId>test</groupId>
-    	<artifactId>WebDriverFactoryProject</artifactId>
-    	<version>123</version>
-    </dependency>
-  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
