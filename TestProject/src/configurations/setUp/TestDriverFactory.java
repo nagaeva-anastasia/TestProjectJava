@@ -9,7 +9,7 @@ import factoryMethods.RemoteDriverFactory;
 import factoryMethods.WebDriverFactory;
 
 public class TestDriverFactory {
-    public static WebDriver CreateDriver() throws Exception
+    public static WebDriver ñreateDriver() throws Exception
     {
         WebDriverFactory factory;
         if (TestConfigurationReader.ApplicationUrl == null) {
