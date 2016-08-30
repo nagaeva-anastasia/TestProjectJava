@@ -18,16 +18,16 @@ import businessObjects.User;
 
 public class AuthPage extends BasePage {
 
-	@FindBy(xpath = "//form[@id='Auth']")
+	@FindBy(xpath = "//*[@id='Auth']")
 	private WebElement form;
 
-	@FindBy(id = "mailbox__login")
+	@FindBy(xpath = "//*[@id='mailbox__login']")
 	private WebElement login;
 
-	@FindBy(id = "mailbox__login__domain")
+	@FindBy(xpath = "//*[@id='mailbox__login__domain']")
 	private WebElement domain;
 
-	@FindBy(name = "Password")
+	@FindBy(xpath = "//*[@name='Password']")
 	private WebElement password;
 
 	public AuthPage(WebDriver driver) {
