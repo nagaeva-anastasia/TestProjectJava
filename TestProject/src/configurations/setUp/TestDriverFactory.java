@@ -22,7 +22,7 @@ public class TestDriverFactory {
 	 * @author Vyacheslav Milashov
 	 */
 
-	public static WebDriver ñreateDriver() throws Exception {
+	public static WebDriver createDriver() throws Exception {
 		WebDriverFactory factory;
 		if (TestConfigurationReader.ApplicationUrl == null) {
 			new TestConfigurationReader();

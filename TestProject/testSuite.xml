@@ -1,0 +1,11 @@
+<suite name="TestSuite">
+	<test name="Mail.ru Test">
+		<classes>
+			<class name="tests.AuthorizationTest" />
+			<class name="tests.DraftsDataTest" />
+			<class name="tests.DraftsSavingTest" />
+			<class name="tests.SendMessageTest" />
+			<class name="tests.ExitTest" />
+		</classes>
+	</test>
+</suite>

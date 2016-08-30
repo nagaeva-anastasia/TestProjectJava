@@ -22,7 +22,7 @@ public class TestService {
 	private static int _failsCounter;
 
 	/**
-	 * Method tries logout
+	 * Method tries to logout
 	 * 
 	 * @author Vyacheslav Milashov
 	 */
@@ -31,7 +31,7 @@ public class TestService {
 		_driver = page.getDriver();
 		try {
 			page.logout();
-			Assert.assertTrue(page.IsLoginFormPresent());
+			Assert.assertTrue(page.isLoginFormPresent());
 			_failsCounter = 0;
 		}
 
@@ -44,7 +44,7 @@ public class TestService {
 			}
 			// Restart browser to try again
 			_driver.quit();
-			_driver = TestDriverFactory.ñreateDriver();
+			_driver = TestDriverFactory.createDriver();
 			_driver.navigate().to(TestConfigurationReader.ApplicationUrl);
 
 			tryToLogout(page);

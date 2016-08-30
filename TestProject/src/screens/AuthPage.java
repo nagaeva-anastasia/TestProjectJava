@@ -72,7 +72,7 @@ public class AuthPage extends BasePage {
 	 * @author Vyacheslav Milashov
 	 */
 
-	public boolean IsLoginFormPresent() {
+	public boolean isLoginFormPresent() {
 		return isElementPresent(login) & isElementPresent(password);
 	}
 }
