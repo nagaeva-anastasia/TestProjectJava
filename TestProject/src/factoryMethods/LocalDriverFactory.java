@@ -29,6 +29,7 @@ public class LocalDriverFactory extends WebDriverFactory {
 			return driver;
 		}
 		String projectDir = System.getProperty("user.dir");
+		// path to properties
 		String driverPath = String.format("%s/src/services/drivers/", projectDir);
 
 		switch (configuration.Browser) {

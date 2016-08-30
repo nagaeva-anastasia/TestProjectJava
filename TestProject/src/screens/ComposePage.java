@@ -26,13 +26,13 @@ import services.helpers.LetterEnum;
  */
 
 public class ComposePage extends BasePage {
-	@FindBy(xpath = "//textarea[@class='js-input compose__labels__input']")
+	@FindBy(css = "textarea.js-input.compose__labels__input")
 	private WebElement emailField;
 
-	@FindBy(xpath = "//*[@name='Subject']")
+	@FindBy(xpath = "//*[contains(@id, 'compose_subj')]")
 	private WebElement subjectField;
 
-	@FindBy(xpath = "//*[@id='tinymce']")
+	@FindBy(id = "tinymce")
 	private WebElement mailBody;
 
 	@FindBy(xpath = "//*[contains(@id, 'composeEditor_ifr')]")
@@ -41,7 +41,7 @@ public class ComposePage extends BasePage {
 	@FindBy(xpath = "//span[contains(text(), 'Сохранить')]")
 	private WebElement saveButton;
 
-	@FindBy(xpath = "//div[@data-name='send']")
+	@FindBy(css = "div[data-name='send']")
 	private List<WebElement> sendButtons;
 
 	@FindBy(xpath = "//div[@class='b-toolbar__message']")

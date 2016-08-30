@@ -10,7 +10,6 @@ import configurations.AppConfiguration;
  * 
  * @author Vyacheslav Milashov
  */
-
 public abstract class WebDriverFactory {
 	protected WebDriver driver;
 	protected DesiredCapabilities capabilities;

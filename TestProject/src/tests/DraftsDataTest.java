@@ -8,7 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import configurations.setUp.TestConfigurationReader;
-import screens.AuthPage;
 import screens.ComposePage;
 import screens.MailListPage;
 import services.dataProvider.TestDataProvider;
@@ -18,23 +17,35 @@ import services.helpers.OpenPageEnum;
 /**
  * Class works with drafts
  * 
+ * describe test steps here
+ * 
  * @author Vyacheslav Milashov
  */
 
 public class DraftsDataTest extends BaseTest {
 
-	/**
-	 * Method checks drafts
+	/*
+	 * Don't need java doc inside the test
+	 */
+	private ComposePage writeNew;
+
+	/*
+	 * @DataProvider public Object[][] dateAndPaycodesData() { use
+	 * TestDataProvider here or define dataProvider in BaseTest }
+	 */
+
+	/*
+	 * set common actions in preliminary steps
 	 * 
-	 * @author Vyacheslav Milashov
+	 * @BeforeClass public void preliminarySteps() { AuthPage authPage = new
+	 * AuthPage(_driver); MailListPage inboxPage = authPage.login(); writeNew =
+	 * inboxPage.openComposePage(); }
 	 */
 
 	@Test
-	public void checkDraftsDataTest() throws IOException, InterruptedException {
-		AuthPage authPage = new AuthPage(_driver);
+	// @Test(dataProvider = "dateAndPaycodesData")
+	public void checkIsDraftsSavedTest(/* parameters from data provider */) throws IOException, InterruptedException {
 		TestDataProvider provider = new TestDataProvider();
-		MailListPage inboxPage = authPage.login();
-		ComposePage writeNew = inboxPage.openComposePage();
 		List<Map<LetterEnum, String>> lettersData = provider.getDraftsData();
 
 		for (Map<LetterEnum, String> draft : lettersData) {
@@ -46,6 +57,10 @@ public class DraftsDataTest extends BaseTest {
 		MailListPage draftsPage = writeNew.open(OpenPageEnum.Drafts);
 		Map<LetterEnum, String> providerData = lettersData.get(lettersData.size() - 1);
 
+		/*
+		 * Add messages for asserts Assert.assertEquals(actualShift,
+		 * expectedShift, "Shift is not pasted.");
+		 */
 		Assert.assertTrue(draftsPage.isEmailAddressInProviderData(providerData.get(LetterEnum.Email)));
 		Assert.assertTrue(draftsPage.isEmailSubjectInProviderData(providerData.get(LetterEnum.Subject)));
 

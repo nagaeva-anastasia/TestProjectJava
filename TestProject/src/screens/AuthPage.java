@@ -18,26 +18,29 @@ import businessObjects.User;
 
 public class AuthPage extends BasePage {
 
-	@FindBy(xpath = "//*[@id='Auth']")
+	@FindBy(xpath = "//form[@id='Auth']")
 	private WebElement form;
 
-	@FindBy(xpath = "//*[@id='mailbox__login']")
+	@FindBy(id = "mailbox__login")
 	private WebElement login;
 
-	@FindBy(xpath = "//*[@id='mailbox__login__domain']")
+	@FindBy(id = "mailbox__login__domain")
 	private WebElement domain;
 
-	@FindBy(xpath = "//*[@name='Password']")
+	@FindBy(name = "Password")
 	private WebElement password;
 
 	public AuthPage(WebDriver driver) {
 		super(driver);
+
+		// to BasePage
 		PageFactory.initElements(getDriver(), this);
 	}
 
 	/**
 	 * Method makes login
 	 * 
+	 * @throws blabla
 	 * @author Vyacheslav Milashov
 	 */
 

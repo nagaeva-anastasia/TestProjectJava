@@ -31,6 +31,8 @@ public class TestService {
 		_driver = page.getDriver();
 		try {
 			page.logout();
+			// we use assertions only in tests
+			// may be it's better to try predicate here?
 			Assert.assertTrue(page.isLoginFormPresent());
 			_failsCounter = 0;
 		}

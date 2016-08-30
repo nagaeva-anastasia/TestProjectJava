@@ -16,7 +16,6 @@ import configurations.AppConfiguration;
  * 
  * @author Vyacheslav Milashov
  */
-
 public class RemoteDriverFactory extends WebDriverFactory {
 
 	/**
@@ -24,7 +23,6 @@ public class RemoteDriverFactory extends WebDriverFactory {
 	 * 
 	 * @author Vyacheslav Milashov
 	 */
-
 	@Override
 	public WebDriver createDriver(AppConfiguration configuration) throws MalformedURLException {
 		if (driver != null) {
@@ -58,7 +56,6 @@ public class RemoteDriverFactory extends WebDriverFactory {
 	 * 
 	 * @author Vyacheslav Milashov
 	 */
-
 	private void setCapabilities(Platform platform, String browserVersion) {
 		capabilities.setCapability(CapabilityType.PLATFORM, platform);
 		capabilities.setCapability(CapabilityType.VERSION, browserVersion);
@@ -69,7 +66,6 @@ public class RemoteDriverFactory extends WebDriverFactory {
 	 * 
 	 * @author Vyacheslav Milashov
 	 */
-
 	private static String buildRemoteServer(String remoteServer, int remoteServerPort) {
 		String s = String.format("%1s:%2s/wd/hub", remoteServer, remoteServerPort);
 		return s;

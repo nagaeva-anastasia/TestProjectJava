@@ -18,11 +18,13 @@ import services.helpers.LoginEnum;
  * @author Vyacheslav Milashov
  */
 
+// move functionality into BaseTest
 public class TestDataProvider {
 	private String[] _texts;
 
 	public TestDataProvider() throws IOException {
 		String projectDir = System.getProperty("user.dir");
+		// move path to properties file
 		File file = new File(String.format("%s/src/services/dataProvider/TestData/TestData.txt", projectDir));
 		FileInputStream fis = new FileInputStream(file);
 		byte[] data = new byte[(int) file.length()];
@@ -84,6 +86,9 @@ public class TestDataProvider {
 
 	/**
 	 * Method returns single letter from provider
+	 * 
+	 * @param test
+	 * @return map of ...
 	 * 
 	 * @author Vyacheslav Milashov
 	 */
